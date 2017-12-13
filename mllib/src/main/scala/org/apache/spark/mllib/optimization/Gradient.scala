@@ -342,3 +342,35 @@ class HingeGradient extends Gradient {
     }
   }
 }
+
+/**
+  * :: DeveloperApi ::
+  * Compute gradient and loss for LogLikelihood, as used in matrix factorization.
+  * See also the documentation for the precise formulation.
+  * In matrix factorization through alternating minimization the formulation looks as follows
+  * min \sum_i \sum_j r_ij*log(w_i*h_j)
+  * Loglikelihood is concave loss and therefore we need negative loglikelihood here for convexity
+  * NOTE: This assumes that the labels are {0,1}
+  */
+@DeveloperApi
+class LogLikelihoodGradient extends Gradient {
+  override def compute(data: Vector, label: Double, weights: Vector): (Vector, Double) = {
+    val dotProduct = dot(data,weights)
+    val scale = -1.0*(label/dotProduct)
+    val loss = -1.0*label*math.log(dotProduct)
+    val gradient = data.copy
+    scal(scale, gradient)
+    (gradient, loss)
+  }
+
+  override def compute(data: Vector,
+                       label: Double,
+                       weights: Vector,
+                       cumGradient: Vector): Double = {
+    val dotProduct = dot(data, weights)
+    val scale = -1.0*(label / dotProduct)
+    axpy(scale, data, cumGradient)
+    -1.0 * label * math.log(dotProduct)
+  }
+}
+

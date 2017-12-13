@@ -280,6 +280,8 @@ class KMeans private (
         val sums = Array.fill(thisCenters.length)(Vectors.zeros(dims))
         val counts = Array.fill(thisCenters.length)(0L)
 
+        //points is a vector with norm
+
         points.foreach { point =>
           val (bestCenter, cost) = KMeans.findClosest(thisCenters, point)
           costAccum.add(cost)

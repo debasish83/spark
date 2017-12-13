@@ -914,7 +914,7 @@ object ALS extends DefaultParamsReadable[ALS] with Logging {
    * send. For example, outLinkBlock(0) contains the local indices (not the original src IDs) of the
    * src factors in this block to send to dst block 0.
    */
-  private type OutBlock = Array[Array[Int]]
+  private[recommendation] type OutBlock = Array[Array[Int]]
 
   /**
    * In-link block for computing src (user/item) factors. This includes the original src IDs
@@ -1033,7 +1033,7 @@ object ALS extends DefaultParamsReadable[ALS] with Logging {
    * @param dstPart partitioner for dst IDs
    * @return an RDD of rating blocks in the form of ((srcBlockId, dstBlockId), ratingBlock)
    */
-  private def partitionRatings[ID: ClassTag](
+  private[recommendation] def partitionRatings[ID: ClassTag](
       ratings: RDD[Rating[ID]],
       srcPart: Partitioner,
       dstPart: Partitioner): RDD[((Int, Int), RatingBlock[ID])] = {
@@ -1285,7 +1285,7 @@ object ALS extends DefaultParamsReadable[ALS] with Logging {
    * @param dstPart partitioner for dst IDs
    * @return (in-blocks, out-blocks)
    */
-  private def makeBlocks[ID: ClassTag](
+  private[recommendation] def makeBlocks[ID: ClassTag](
       prefix: String,
       ratingBlocks: RDD[((Int, Int), RatingBlock[ID])],
       srcPart: Partitioner,

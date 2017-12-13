@@ -659,3 +659,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+===============================================================================
+ALM class in package org.apache.spark.ml.recommendation is distributed with 
+Copyright (c) 2017, Debasish Das (Verizon), all rights reserved.
